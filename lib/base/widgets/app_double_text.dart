@@ -11,12 +11,14 @@ final String smallText;
      
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(bigText, style: AppStyles.headLineStyle3,),
+        Text(bigText, style: AppStyles.headLineStyle2,),
         InkWell(
           onTap: () {
 
           },
-          child:Text(smallText, style: AppStyles.headLineStyle3,), 
+          child:Text(smallText, style: AppStyles.textStyle.copyWith(
+            color: AppStyles.primaryColor
+          ),), 
         )
       ],
     );
