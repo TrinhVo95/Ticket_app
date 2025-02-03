@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/base/utils/all_json.dart';
-import 'package:ticket_app/base/widgets/ticket_view.dart';
 import 'package:ticket_app/screens/home/widgets/hotel.dart';
 
 class AllHotels extends StatelessWidget {

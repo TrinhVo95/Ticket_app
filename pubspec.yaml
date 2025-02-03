@@ -64,6 +64,8 @@ flutter:
     - assets/images/hotel.png
     - assets/images/city.png
     - assets/images/pool.png
+    - assets/images/plane_sit.png
+
 
 
   #   - images/a_dot_ham.jpeg
