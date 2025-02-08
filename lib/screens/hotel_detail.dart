@@ -55,22 +55,21 @@ class _HotelDetailState extends State<HotelDetail> {
                   bottom: 20,
                   right: 20,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    color: Colors.grey,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    color: Colors.black.withValues(alpha: 0.5),
                     child: Text(
                       hotelList[index]["place"],
                       style: TextStyle(
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            // color: AppStyles.primaryColor,
-                            color:Colors.red,
-                            offset: Offset(2.0, 2.0)
-                          )
-                        ],
-                        fontSize: 24
-                      ),
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                                blurRadius: 10.0,
+                                color: AppStyles.primaryColor,
+                                // color:Colors.red,
+                                offset: const Offset(2.0, 2.0))
+                          ],
+                          fontSize: 24),
                     ),
                   ),
                 )
@@ -79,10 +78,10 @@ class _HotelDetailState extends State<HotelDetail> {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: ExpandedTextWidget(text: hotelList[index]["detail"]),
+            ),
             const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
@@ -93,18 +92,59 @@ class _HotelDetailState extends State<HotelDetail> {
               height: 200.0,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
+                  itemCount: hotelList[index]["images"].length,
+                  itemBuilder: (context, imageIndex) {
                     return Container(
-                        margin: EdgeInsets.all(16.0),
+                        margin: const EdgeInsets.all(16.0),
                         color: Colors.red,
                         child:
-                            Image.network("https://placehold.co/200x200/png"));
+                            Image.asset('assets/images/${hotelList[index]["images"][imageIndex]}'));
                   }),
             )
           ])),
         ],
       ),
+    );
+  }
+}
+
+class ExpandedTextWidget extends StatefulWidget {
+  const ExpandedTextWidget({super.key, required this.text});
+  final String text;
+
+  @override
+  State<ExpandedTextWidget> createState() => _ExpandedTextWidgetState();
+}
+
+class _ExpandedTextWidgetState extends State<ExpandedTextWidget> {
+  bool isExpanded = false;
+  _toggleExpansion() {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var textWidget = Text(
+      widget.text,
+      maxLines: isExpanded ? null : 8,
+      overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textWidget,
+        GestureDetector(
+          onTap: () {
+            _toggleExpansion();
+          },
+          child: Text(
+            isExpanded ? 'Less' : 'More',
+            style: AppStyles.textStyle.copyWith(color: AppStyles.primaryColor),
+          ),
+        )
+      ],
     );
   }
 }
